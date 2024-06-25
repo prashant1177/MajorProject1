@@ -14,17 +14,43 @@ main().then(()=>{
 async function main(){
     await mongoose.connect(MONGO_URL);
 }
+
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({extended: true}));
+
 
 app.get("/", (req, res)=>{
     res.send("hello");
 });
 
+// Index Route
 app.get("/listings", async (req, res)=>{
     const allListings = await Listing.find({});
     res.render("./listings/index.ejs", { allListings });
+});
+
+// Create Route
+app.get("/listings/new", async(req,res)=>{
+    res.render("./listings/new.ejs");
+});
+
+// Show route
+app.get("/listings/:id", async (req, res)=>{
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("./listings/show.ejs", {listing});
+});
+
+// Save Route
+app.post("/listings", async (req, res)=>{
+    let newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
 })
+
+
 // app.get("/test", async (req, res)=>{
 //     let sampleListing = new Listing({
 //         title: "First",
