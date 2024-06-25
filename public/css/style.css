@@ -1,0 +1,13 @@
+body{
+    background-color: aliceblue;
+}
+
+.navbar{
+    height: 5rem;
+    font-size: large;
+}
+
+.fa-solid{
+    color: red;
+    font-size: larger;
+}
