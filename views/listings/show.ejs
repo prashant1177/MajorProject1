@@ -14,6 +14,7 @@
         <li><%= listing.location %></li>
         <li><%= listing.capacity %> peoples</li>
     </ul>
-    <a href="/listings/<%= listing._id %>/edit">Edit</a>
+    <a href="/listings/<%= listing._id %>/edit">Edit Listing</a>
+    <form action="/listings/<%= listing._id %>?_method=DELETE" method="post"><button>Remove Listing</button></form>
 </body>
 </html>

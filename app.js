@@ -58,6 +58,14 @@ app.put("/listings/:id", async (req, res)=>{
     res.redirect(`/listings/${id}`);
 });
 
+// Delete Route
+app.delete("/listings/:id", async (req, res)=>{
+    let {id} = req.params;
+    await Listing.findByIdAndDelete(id);
+    res.redirect("/listings");
+})
+
+
 // Save Route
 app.post("/listings", async (req, res)=>{
     let newListing = new Listing(req.body.listing);
