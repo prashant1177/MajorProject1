@@ -12,9 +12,6 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.showOuterContainer{
-    padding: 5px;
-}
 .show-img{
     height: 20rem;
     object-fit: cover;
