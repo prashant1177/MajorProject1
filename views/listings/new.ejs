@@ -1,18 +1,19 @@
 <% layout("./layouts/boilerplate") %>
 <body>
-    <form method="POST" action="/listings">
-        <input name="listing[title]" placeholder="Enter Title" type="text"/>
-        <br>
-        <textarea name="listing[description]" placeholder="Enter description"></textarea>
-        <br>
-        <input name="listing[image]" placeholder="Enter image URL"  type="text"/>
-        <br>
-        <input name="listing[price]" placeholder="Enter price"  type="number"/>
-        <br>
-        <input name="listing[location]" placeholder="Enter location"  type="text"/>
-        <br>
-        <input name="listing[capacity]" placeholder="Maximum capacity"  type="number"/>
-        <br>
-        <button>Submit</button>
+    <h2 class="text-center my-4">Add Listing</h2>
+    <form method="POST" action="/listings" class="container mb-5">
+        <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <input name="listing[title]" placeholder="Enter Title" type="text" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Description</label>
+        <textarea name="listing[description]" placeholder="Enter description" class="form-control"></textarea>
+        <br><label for="exampleFormControlInput1" class="form-label">Image</label>
+        <input name="listing[image]" placeholder="Enter image URL"  type="text" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Price (per km)</label>
+        <input name="listing[price]" placeholder="Enter price"  type="number" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Location</label>
+        <input name="listing[location]" placeholder="Enter location"  type="text" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Capacity</label>
+        <input name="listing[capacity]" placeholder="Maximum capacity" type="number" class="form-control"/>
+        <button class="btn btn-dark my-4">Submit</button>
     </form>
 </body>

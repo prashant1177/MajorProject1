@@ -1,19 +1,22 @@
 <% layout("./layouts/boilerplate") %>
 <body>
-    <h3>Edit Listing</h3>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-        <input name="listing[title]" value="<%= listing.title %>" type="text"/>
+    <h2 class="text-center mt-4 my-4">Edit Listing</h2>
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="container mb-5">
+        <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control"/>
         <br>
-        <textarea name="listing[description]" ><%= listing.description %></textarea>
-        <br>
-        <input name="listing[image]" value="<%= listing.image %>"  type="text"/>
-        <br>
-        <input name="listing[price]" value="<%= listing.price %>"  type="number"/>
-        <br>
-        <input name="listing[location]" value="<%= listing.location %>"  type="text"/>
-        <br>
-        <input name="listing[capacity]" value="<%= listing.capacity %>"  type="number"/>
-        <br>
-        <button>Submit</button>
+        <br><label for="exampleFormControlInput1" class="form-label" >Description</label>
+        <textarea name="listing[description]" class="form-control"><%= listing.description %></textarea>
+        <br><label for="exampleFormControlInput1" class="form-label">Image</label>
+        <input name="listing[image]" value="<%= listing.image %>"  type="text" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Price (per km)</label>
+        <input name="listing[price]" value="<%= listing.price %>"  type="number" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Location</label>
+        <input name="listing[location]" value="<%= listing.location %>"  type="text" class="form-control"/>
+        <br><label for="exampleFormControlInput1" class="form-label">Capacity</label>
+        <input name="listing[capacity]" value="<%= listing.capacity %>"  type="number" class="form-control"/>
+      
+        <button class="btn btn-dark my-4">Update</button>
+        <a href="/listings/<%= listing._id %>" class="btn btn-danger my-4">Cancel</a>
     </form>
 </body>

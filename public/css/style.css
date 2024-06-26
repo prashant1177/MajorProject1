@@ -1,12 +1,22 @@
-body{
-    background-color: aliceblue;
-}
+
 .link-style{
     text-decoration: none;
 }
 
-.card-img-top{
+.home-cards{
     height: 17rem;
+    object-fit: cover;
+}
+.showContainer1{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.showOuterContainer{
+    padding: 5px;
+}
+.show-img{
+    height: 20rem;
     object-fit: cover;
 }
 .card{
@@ -18,17 +28,21 @@ body{
     display: flex;
     justify-content: space-between;
 }
-.card-img-top{
+.home-cards{
     width: 100%;
 }
 .navbar{
     height: 5rem;
     font-size: large;
 }
-
+.navbar-con{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 .fa-solid{
     color: red;
-    font-size: larger;
+    font-size: xx-large;
 }
 
 

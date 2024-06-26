@@ -1,12 +1,12 @@
 <% layout("./layouts/boilerplate") %>
 <body>
-    <h1>Listings</h1>
+    <h1 class="my-4">Listings</h1>
 
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 w-100">
     <% for(let listings of allListings) { %>
       <div class="card col mb-5">
         <a href="/listings/<%= listings._id %>" class="link-style">
-        <img src="<%= listings.image %>" class="card-img-top" alt="<%= listings.title %>">
+        <img src="<%= listings.image %>" class="card-img-top home-cards" alt="<%= listings.title %>">
         <div class="card-body">
           <h5 class="card-title"><%= listings.title %></h5>
         </div>
