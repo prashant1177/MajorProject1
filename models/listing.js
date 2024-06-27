@@ -19,10 +19,13 @@ const listingSchema = new Schema({
     reviews: [
         {
             type: Schema.Types.ObjectId,
-            ref: "reviews",
+            ref: "Review",
         }
     ]
 });
 
+listingSchema.post("findOneAndDelete", async(listing)=>{
+    await reviews.deleteMany({_id : {$in: listing.reviews}});
+})
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports  = Listing;
