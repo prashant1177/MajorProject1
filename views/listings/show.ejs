@@ -25,5 +25,15 @@
         <label class="col"><strong>Location</strong></label>
         <label class="col"><%= listing.location %></label>
     </div></div>
+    <div class="my-4"><h4>Reviews</h4>
+    <form novalidate class="needs-validation" action="/listings/<%= listing.id %>/reviews" method="POST">
+        <label class="form-label" for="rating">Rating</label>
+        <input class="form-range"  type="range" min="1" max="5" id="rating" name="review[rating]">
+        <br>
+        <label class="form-label"  for="comment">Comment</label>
+        <textarea required class="form-control"  id="comment" name="review[comment]"></textarea>
+        <br>
+        <button>Submit</button>
+    </form></div>
 </div>
 </body>

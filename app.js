@@ -7,7 +7,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/WrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {ListingSchema} = require("./schema.js");
+const {ListingSchema, reviewSchema} = require("./schema.js");
+const reviews = require("./models/reviews.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/travel";
 main().then(()=>{
@@ -32,8 +33,19 @@ app.get("/", (req, res)=>{
     res.send("hello");
 });
 
+// This is providing error message generated to error handler
 const validateListing = (req, res, next) =>{
     let {error} = ListingSchema.validate(req.body);
+    if(error){
+        throw new ExpressError(400, error);
+    }else{
+        next();
+    }
+}
+
+// Review Validation client side
+const validateReview = (req, res, next) =>{
+    let {error} = reviewSchema.validate(req.body);
     if(error){
         throw new ExpressError(400, error);
     }else{
@@ -83,11 +95,24 @@ app.delete("/listings/:id", wrapAsync(async (req, res)=>{
 
 // Save Route && Create route
 app.post("/listings",validateListing, wrapAsync(async (req, res)=>{
-       let newListing = new Listing(req.body.listing);
-        await newListing.save();
-        res.redirect("/listings");
+    let newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
 }));
 
+// Adding new review
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async(req, res)=>{
+    let listing = await Listing.findById(req.params.id);
+    let newReviews = new reviews(req.body.review);
+    listing.reviews.push(newReviews);
+
+    await newReviews.save();
+    await listing.save();
+
+    res.redirect(`/listings/${listing._id}`);
+}));
+
+// Page not found 
 app.all("*", (req, res, next)=>{
     next(new ExpressError(404, "Page not found"));
 });
