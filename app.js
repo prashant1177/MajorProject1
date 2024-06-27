@@ -1,16 +1,13 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utils/WrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {ListingSchema, reviewSchema} = require("./schema.js");
-const reviews = require("./models/reviews.js");
 
 const listings = require("./routes/listing.js");
+const reviews = require("./routes/reviews.js");
 
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/travel";
@@ -37,42 +34,10 @@ app.get("/", (req, res)=>{
 });
 
 
-// Review Validation client side
-const validateReview = (req, res, next) =>{
-    let {error} = reviewSchema.validate(req.body);
-    if(error){
-        throw new ExpressError(400, error);
-    }else{
-        next();
-    }
-}
 
 
 app.use("/listings", listings);
-
-
-// Adding new review
-app.post("/listings/:id/reviews", validateReview, wrapAsync(async(req, res)=>{
-    let listing = await Listing.findById(req.params.id);
-    let newReviews = new reviews(req.body.review);
-    listing.reviews.push(newReviews);
-
-    await newReviews.save();
-    await listing.save();
-
-    res.redirect(`/listings/${listing._id}`);
-}));
-
-
-// Delete review route
-app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async(req,res)=>{
-    let {id, reviewId} = req.params;
-
-   await Listing.findByIdAndUpdate(id, {$pull: {reviewId}});
-   await reviews.findByIdAndDelete(reviewId);
-   
-   res.redirect(`/listings/${id}`);
-}));
+app.use("/listings/:id/reviews", reviews);
 
 
 // Page not found 
