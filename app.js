@@ -1,7 +1,5 @@
 const express = require("express");
 const app = express();
-const session = require("express-session");
-const flash = require("connect-flash");
 
 const mongoose = require("mongoose");
 
@@ -9,9 +7,15 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session");
+const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/reviews.js");
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/reviews.js");
+const userRouter = require("./routes/user.js");
 
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/travel";
@@ -52,6 +56,13 @@ app.get("/", (req, res)=>{
 app.use(session(sessionOption));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session()); 
+passport.use(new LocalStrategy(User.authenticate()));
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req,res,next)=>{
@@ -60,8 +71,21 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.get("/demouser", async(req, res)=>{
+    let fakeUser = new User({
+        email: "student@gmail.com",
+        username: "delta-student1",
+    }
+    );
+    let newUser = await User.register(fakeUser, "helloworld");
+    res.send(newUser);
+});
+
+
+
+app.use("/listings", listingsRouter );
+app.use("/listings/:id/reviews", reviewsRouter );
+app.use("/", userRouter );
 
 
 // Page not found 
