@@ -6,6 +6,7 @@ const wrapAsync = require("../utils/WrapAsync.js");
 const {ListingSchema} = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 
+
 // This is providing error message generated to error handler
 const validateListing = (req, res, next) =>{
     let {error} = ListingSchema.validate(req.body);
@@ -23,36 +24,51 @@ router.get("/", wrapAsync(async (req, res)=>{
     res.render("./listings/index.ejs", { allListings });
 }));
 
+
 // Create Route
 router.get("/new", wrapAsync(async(req,res)=>{
     res.render("./listings/new.ejs");
 }));
 
+
 // Show route
 router.get("/:id", wrapAsync(async (req, res)=>{
     let {id} = req.params;
     const listing = await Listing.findById(id).populate("reviews");
+    if(!listing){
+        req.flash("error", "Listing does not found");
+        res.redirect("/listings");
+    }
     res.render("./listings/show.ejs", {listing});
 }));
+
 
 // Edit route
 router.get("/:id/edit",wrapAsync( async (req, res)=>{
     let {id} = req.params;
-    const listing = await Listing.findById(id); 
+    const listing = await Listing.findById(id);  
+    if(!listing){
+        req.flash("error", "Listing does not found");
+        res.redirect("/listings");
+    }
     res.render("./listings/edit.ejs", {listing});
 }));
+
 
 // Update route
 router.put("/:id",validateListing, wrapAsync(async (req, res)=>{
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    req.flash("success", "Listing is updated succesfully");
     res.redirect(`/listings/${id}`);
 }));
+
 
 // Delete Route
 router.delete("/:id", wrapAsync(async (req, res)=>{
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success", "Listing is deleted succesfully");
     res.redirect("/listings");
 }));
 
@@ -61,6 +77,7 @@ router.delete("/:id", wrapAsync(async (req, res)=>{
 router.post("/",validateListing, wrapAsync(async (req, res)=>{
     let newListing = new Listing(req.body.listing);
     await newListing.save();
+    req.flash("success", "Listing is added succesfully");
     res.redirect("/listings");
 }));
 
