@@ -27,6 +27,7 @@ router.get("/", wrapAsync(async (req, res)=>{
 
 // Create Route
 router.get("/new",isLoggedIn, wrapAsync(async(req,res)=>{
+    
     res.render("./listings/new.ejs");
 }));
 
@@ -34,7 +35,7 @@ router.get("/new",isLoggedIn, wrapAsync(async(req,res)=>{
 // Show route
 router.get("/:id", wrapAsync(async (req, res)=>{
     let {id} = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id).populate("reviews").populate("owner");
     if(!listing){
         req.flash("error", "Listing does not found");
         res.redirect("/listings");
@@ -76,6 +77,7 @@ router.delete("/:id",isLoggedIn, wrapAsync(async (req, res)=>{
 // Save Route && Create route
 router.post("/",validateListing, wrapAsync(async (req, res)=>{
     let newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("success", "Listing is added succesfully");
     res.redirect("/listings");

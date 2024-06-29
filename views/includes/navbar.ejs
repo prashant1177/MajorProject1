@@ -1,4 +1,4 @@
-<div class="navbar-con bg-body-tertiary">
+<div class=" bg-body-tertiary">
 <nav class="navbar sticky-top navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><i class="fa-solid fa-car-side"></i></a>
@@ -11,7 +11,14 @@
           <a class="nav-link px-4" href="/listings">All Listings</a>
           <a class="nav-link px-4" href="/listings/new">Add Listings</a>
         </div>
+        <div class="navbar-nav ms-auto">
+          <% if(!currentUser) {%>
+          <a class="nav-link px-4" href="/signup">Sign Up</a>
+          <a class="nav-link px-4" href="/login">Login</a>
+          <% }%> <% if(currentUser){%>
+            <a class="nav-link px-4" href="/logout">Logout</a>
+            <% }%> </div>
       </div>
     </div>
   </nav>
-</div>
+</div> 

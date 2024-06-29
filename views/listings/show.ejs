@@ -12,8 +12,9 @@
           <h3><%= listing.title %></h3>
           <br />
           <p><%= listing.description %></p>
+          <br/>
         </div>
-
+<% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
         <div class="row">
           <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col"
             >Edit Listing</a
@@ -25,7 +26,7 @@
           >
             <button class="btn btn-danger">Remove Listing</button>
           </form>
-        </div>
+        </div><% } %>
       </div>
     </div>
     <h4 class="my-4 mx-4">Details</h4>
@@ -42,6 +43,10 @@
         <label class="col"><strong>Location</strong></label>
         <label class="col"><%= listing.location %></label>
       </div>
+      <div class="row my-4">
+        <label class="col"><strong>Listed By</strong></label>
+        <label class="col"><%= listing.owner.username %></label>
+      </div>
     </div>
   </div>
   <hr class="my-4" />
@@ -53,9 +58,10 @@
     <h5><%= review.title %></h5>
       <p><%= review.comment %></p>
       <div class="row">   <p class="col"><strong><%= review.rating %> Stars</strong></p>
-        <form class="col" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+    <form class="col" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
           <button>Delete</button>
-        </form></div>
+        </form>
+      </div>
    
       </div>
     <% }%>
