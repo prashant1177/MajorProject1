@@ -12,9 +12,9 @@
           <h3><%= listing.title %></h3>
           <br />
           <p><%= listing.description %></p>
-          <br/>
+          <br />
         </div>
-<% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+        <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
         <div class="row">
           <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col"
             >Edit Listing</a
@@ -26,7 +26,8 @@
           >
             <button class="btn btn-danger">Remove Listing</button>
           </form>
-        </div><% } %>
+        </div>
+        <% } %>
       </div>
     </div>
     <h4 class="my-4 mx-4">Details</h4>
@@ -55,62 +56,70 @@
   <div class="row mx-4 my-4">
     <% for(review of listing.reviews){%>
     <div class="p-4 col-5 bg-light my-2">
-    <h5><%= review.title %></h5>
+      <h4><i>@<%= review.author.username %></i></h4>
+      <p class="starability-result" data-rating="<%= review.rating %>">
+        Rated: <%= review.rating %> stars
+      </p>
+
       <p><%= review.comment %></p>
-      
-    <label><i>@<%= review.author.username %></i></label>
-      <div class="row">   <p class="col"><strong><%= review.rating %> Stars</strong></p>
-   
-   
-        <form class="col" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-          <button>Delete</button>
-        </form>
-      </div>
-   
-      </div>
+
+      <form
+        method="post"
+        action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+      >
+        <button>Delete</button>
+      </form>
+    </div>
     <% }%>
   </div>
-  
-<% if(currentUser){ %>
+
+  <% if(currentUser){ %>
   <div
-  class="my-4 bg-light p-4 rounded-4 border-bottom border-dark p-2 mb-2 border-opacity-10"
->
-  
-  <h4 class="my-4">Leave A Reviews</h4>
-  <form
-    novalidate
-    class="needs-validation"
-    action="/listings/<%= listing.id %>/reviews"
-    method="POST"
+    class="my-4 bg-light p-4 rounded-4 border-bottom border-dark p-2 mb-2 border-opacity-10"
   >
-    <label class="form-label" for="rating">Rating</label>
-    <input
-      class="form-range"
-      type="range"
-      min="1"
-      max="5"
-      id="rating"
-      name="review[rating]"
-    />
-    <br />
-    <label class="form-label" for="title">Name</label>
-    <input
-      required
-      class="form-control"
-      id="title"
-      name="review[title]"
-    />
-    <br/>
-    <label class="form-label" for="comment">Comment</label>
-    <textarea
-      required
-      class="form-control"
-      id="comment"
-      name="review[comment]"
-    ></textarea>
-    <br />
-    <button class="btn btn-dark">Submit</button>
-  </form>
-</div>
-<% }%>
+    <h4 class="my-4">Leave A Reviews</h4>
+    <form
+      novalidate
+      class="needs-validation"
+      action="/listings/<%= listing.id %>/reviews"
+      method="POST"
+    >
+
+      <label class="form-label" for="rating">Rating</label>
+ 
+      <fieldset class="starability-basic">
+        <input
+          type="radio"
+          id="no-rate"
+          class="input-no-rate"
+          name="review[rating]"
+          value="1"
+          checked
+          aria-label="No rating."
+        />
+        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+        <label for="first-rate1" title="Terrible">1 star</label>
+        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+        <label for="first-rate2" title="Not good">2 stars</label>
+        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+        <label for="first-rate3" title="Average">3 stars</label>
+        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+        <label for="first-rate4" title="Very good">4 stars</label>
+        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+        <label for="first-rate5" title="Amazing">5 stars</label>
+      </fieldset>
+      <br />
+
+      <label class="form-label" for="comment">Comment</label>
+      <textarea
+        required
+        class="form-control"
+        id="comment"
+        name="review[comment]"
+      ></textarea>
+      <br />
+      <button class="btn btn-dark">Submit</button>
+    </form>
+  </div>
+  <% }%>
 </body>

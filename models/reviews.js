@@ -6,7 +6,6 @@ const User = require("./user");
 
 
 const reviewSchema = new Schema({
-    title: String,
     comment: String,
     rating: {
         type: Number,

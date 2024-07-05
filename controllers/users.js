@@ -1,6 +1,4 @@
-
 const User = require("../models/user.js");
-
 module.exports.signupGet = (req, res) => {
   res.render("./users/signup.ejs");
 };
@@ -37,14 +35,14 @@ module.exports.loginPost = async (req, res) => {
   }
 };
 
-
 module.exports.logout = async (req, res) => {
-    req.logout((err) => {
-      if (err) {
-        return next(err);
-      } else {
-        req.flash("success", "You are loggged out");
-        res.redirect("/listings");
-      }
-    });
-  };
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    } else {
+      req.flash("success", "You are loggged out");
+      res.redirect("/listings");
+    }
+  });
+};
+
