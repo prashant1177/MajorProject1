@@ -2,54 +2,80 @@
 <body>
   <div class="showOuterContainer rounded-4 my-4">
     <div class="row my-4 mx-2">
+      <h3><%= listing.title %></h3>
       <img
         src="<%= listing.image %>"
         class="card-img-top show-img col rounded-5"
         alt="<%= listing.title %>"
       />
-      <div class="col showContainer1">
-        <div>
-          <h3><%= listing.title %></h3>
-          <br />
-          <p><%= listing.description %></p>
-          <br />
-        </div>
-        <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
-        <div class="row">
-          <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col"
-            >Edit Listing</a
-          >
-          <form
-            action="/listings/<%= listing._id %>?_method=DELETE"
-            method="post"
-            class="col"
-          >
-            <button class="btn btn-danger">Remove Listing</button>
-          </form>
-        </div>
-        <% } %>
-      </div>
     </div>
-    <h4 class="my-4 mx-4">Details</h4>
-    <div class="px-4 border my-4 mx-4">
-      <div class="row my-4">
-        <label class="col"><strong>Price</strong></label>
-        <label class="col"> &#x20B9;<%= listing.price %>/Per KM</label>
+    <div class="row my-4 mx-2">
+      <div class="col">
+        <br />
+        <div class="px-4 border">
+          <div class="row my-4">
+            <label class="col"><strong>Price</strong></label>
+            <label class="col"> &#x20B9;<%= listing.price %>/Per Day</label>
+          </div>
+          <div class="row my-4">
+            <label class="col"><strong>Capacity</strong></label>
+            <label class="col"><%= listing.capacity %> Peoples</label>
+          </div>
+          <div class="row my-4">
+            <label class="col"><strong>Location</strong></label>
+            <label class="col"><%= listing.location %></label>
+          </div>
+          <div class="row my-4">
+            <label class="col"><strong>Listed By</strong></label>
+            <label class="col"><%= listing.owner.username %></label>
+          </div>
+        </div>
       </div>
-      <div class="row my-4">
-        <label class="col"><strong>Capacity</strong></label>
-        <label class="col"><%= listing.capacity %> Peoples</label>
+      <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+      <div class="col row mx-auto my-4">
+        <a href="/listings/<%= listing._id %>/edit" class="col-md-6 mb-4">
+
+        <button class="btn btn-dark w-100">
+          Edit Listing</button></a
+        >
+        <form
+          action="/listings/<%= listing._id %>?_method=DELETE"
+          method="post"
+          class="col-md-6 mb-4"
+        >
+          <button class="btn btn-danger w-100">Remove Listing</button>
+        </form>
       </div>
-      <div class="row my-4">
-        <label class="col"><strong>Location</strong></label>
-        <label class="col"><%= listing.location %></label>
+      <% }else{ %>
+      <div class="my-4 w-100 mx-auto col">
+        <form action="/bookings/<%= listing._id %>/book" method="post" class="col">
+          <div class="row mx-auto">
+            <div class="col-md-6 mb-4">
+                <p>From</p>
+                <input type="text" id="fromDate" class="w-100 p-2" name="fromDate"/>
+            </div>
+            <div class="col-md-6 mb-4">
+                <p>To</p>
+                <input type="text" id="toDate" class="w-100 p-2" name="toDate" />
+            </div>
+        </div>
+        
+          <div class="px-2 mx-auto">
+            <input type="number" class="w-100 p-2 mt-2 mb-4 mx-auto" placeholder="Guests" max="<%= listing.capacity %>" min="1" value="1" name="totalGuests"/>
+            <button class="btn btn-danger w-100">Book Now</button>
+          </div>
+        </form>
+        
       </div>
-      <div class="row my-4">
-        <label class="col"><strong>Listed By</strong></label>
-        <label class="col"><%= listing.owner.username %></label>
-      </div>
+      <% }%>
+      <br />
     </div>
   </div>
+
+  <h4 class="my-4 mx-4">Details</h4>
+  <p style="white-space: pre-line; font-size: large">
+    <%= listing.description %>
+  </p>
   <hr class="my-4" />
 
   <h4 class="mx-4 my-4">Reviews</h4>
@@ -84,9 +110,8 @@
       action="/listings/<%= listing.id %>/reviews"
       method="POST"
     >
-
       <label class="form-label" for="rating">Rating</label>
- 
+
       <fieldset class="starability-basic">
         <input
           type="radio"
@@ -122,4 +147,79 @@
     </form>
   </div>
   <% }%>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let bookedDates = <%- JSON.stringify(bookedDates) %>;
+  
+      // Initialize Flatpickr for 'From' date input
+      let fromDatePicker = flatpickr("#fromDate", {
+        dateFormat: "Y-m-d",
+        disable: bookedDates,
+        inline: false, // Calendar will not show by default
+        locale: {
+          firstDayOfWeek: 1 // Start week on Monday
+        },
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+          // Highlight booked dates in the calendar
+          if (bookedDates.includes(dayElem.dateObj.toISOString().split("T")[0])) {
+            dayElem.style.backgroundColor = "#ffcccc"; // Light red for booked dates
+            dayElem.style.color = "black";
+          }
+  
+          // Disable days before the "From" date once it's selected
+          if (fp.selectedDates.length > 0 && dObj < fp.selectedDates[0]) {
+            dayElem.classList.add("flatpickr-disabled"); // Disable days before "From" date
+          }
+        },
+        onChange: function(selectedDates, dateStr, instance) {
+          let selectedFromDate = selectedDates[0];
+  
+          // Change color of the selected "From" date
+          const selectedDay = instance.calendarContainer.querySelector(`[aria-label="${selectedFromDate.toDateString()}"]`);
+          if (selectedDay) {
+            selectedDay.style.backgroundColor = '#4CAF50'; // Green background
+            selectedDay.style.color = '#fff'; // White text
+          }
+  
+          // Disable dates in the "To" picker that are before the "From" date
+          toDatePicker.set('minDate', selectedFromDate);
+        }
+      });
+  
+      // Initialize Flatpickr for 'To' date input
+      let toDatePicker = flatpickr("#toDate", {
+        dateFormat: "Y-m-d",
+        disable: bookedDates,
+        inline: false, // Calendar will not show by default
+        locale: {
+          firstDayOfWeek: 1
+        },
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+          // Highlight booked dates in the calendar
+          if (bookedDates.includes(dayElem.dateObj.toISOString().split("T")[0])) {
+            dayElem.style.backgroundColor = "#ffcccc"; // Light red for booked dates
+            dayElem.style.color = "black";
+          }
+  
+          // Disable days before the "From" date in the "To" picker
+          if (fp.selectedDates.length > 0 && dObj < fp.selectedDates[0]) {
+            dayElem.classList.add("flatpickr-disabled"); // Disable days before "From" date
+          }
+        },
+        onChange: function(selectedDates, dateStr, instance) {
+          let selectedToDate = selectedDates[0];
+  
+          // Change color of the selected "To" date
+          const selectedDay = instance.calendarContainer.querySelector(`[aria-label="${selectedToDate.toDateString()}"]`);
+          if (selectedDay) {
+            selectedDay.style.backgroundColor = '#4CAF50'; // Green background
+            selectedDay.style.color = '#fff'; // White text
+          }
+        }
+      });
+    });
+  </script>
+  
+  
+  
 </body>

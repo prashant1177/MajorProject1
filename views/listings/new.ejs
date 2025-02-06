@@ -1,25 +1,68 @@
 <% layout("./layouts/boilerplate") %>
 <body>
-    <h2 class="text-center my-4">Add Listing</h2>
-    <form method="POST" action="/listings" class="container mb-5 needs-validation" novalidate>
-        <label for="exampleFormControlInput1" class="form-label">Title</label>
-        <input required name="listing[title]" placeholder="Enter Title" type="text" class="form-control"/>
+  <h2 class="text-center my-4">Add Listing</h2>
+  <form
+    enctype="multipart/form-data"
+    method="POST"
+    action="/listings"
+    class="container mb-5 needs-validation"
+    novalidate
+  >
+    <label for="exampleFormControlInput1" class="form-label">Title</label>
+    <input
+      required
+      name="title"
+      placeholder="Enter Title"
+      type="text"
+      class="form-control"
+    />
 
-        <br><label for="exampleFormControlInput1" class="form-label">Description</label>
-        <textarea required name="listing[description]" placeholder="Enter description" class="form-control"></textarea>
-     
-        <br><label for="exampleFormControlInput1" class="form-label">Image</label>
-        <input required name="listing[image]" placeholder="Enter image URL"  type="text" class="form-control"/>
-       
-        <br><label for="exampleFormControlInput1" class="form-label">Price (per km)</label>
-        <input required name="listing[price]" placeholder="Enter price"  type="number" class="form-control"/>
-        
-        <br><label for="exampleFormControlInput1" class="form-label">Location</label>
-        <input required name="listing[location]" placeholder="Enter location"  type="text" class="form-control"/>
-        
-        <br><label for="exampleFormControlInput1" class="form-label">Capacity</label>
-        <input required name="listing[capacity]" placeholder="Maximum capacity" type="number" class="form-control"/>
-        
-        <button class="btn btn-dark my-4">Submit</button>
-    </form>
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Description</label
+    >
+    <textarea
+      required
+      name="description"
+      placeholder="Enter description"
+      class="form-control"
+    ></textarea>
+
+    <br /><label for="exampleFormControlInput1" class="form-label">Image</label>
+    <input required name="image" type="file" class="form-control" />
+
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Price (per day)</label
+    >
+    <input
+      required
+      name="price"
+      placeholder="Enter price"
+      type="number"
+      class="form-control"
+    />
+
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Location</label
+    >
+    <input
+      required
+      name="location"
+      placeholder="Enter location"
+      type="text"
+      class="form-control"
+    />
+
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Capacity</label
+    >
+    <input
+      required
+      name="capacity"
+      placeholder="Maximum capacity"
+      type="number"
+      class="form-control"
+    />
+
+    <button class="btn btn-dark my-4">Submit</button>
+  </form>
 </body>

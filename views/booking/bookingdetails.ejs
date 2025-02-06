@@ -1,0 +1,59 @@
+<% layout("./layouts/boilerplate") %>
+<body>
+  <h1 class="text-center my-4">Bookings Details</h1>
+
+  
+  <section>
+    <div class="container py-5 d-flex flex-column align-items-center">
+          <div class="card text-black w-50">
+         
+            <div class="card-body">
+              <div class="text-center">
+                <h5 class="card-title"><%= bookings.user.fullname %></h5>
+                <p class="text-muted mb-4">Contact Details</p>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between total font-weight-bold mb-2">
+                  <span>Username</span><span><%= bookings.user.username %></span>
+                </div>
+                <div class="d-flex justify-content-between ">
+                  <span>Email</span><span><%= bookings.user.email %></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span>Phone</span><span><%= bookings.user.phone %></span>
+                </div>
+                
+              </div>
+          </div>
+
+          
+        </div>
+        <div class="card  bg-body-secondary w-50">
+          <div class="card-body">
+            <div class="text-center">
+              <h5 class="card-title"><%= bookings.hotel.title %></h5>
+              <p class="text-muted mb-4">Booking Details</p>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between ">
+                <span><strong>From</strong></span><span><strong>To</strong></span>
+              </div>
+              <div class="d-flex justify-content-between mb-4">
+                <span><strong><%= bookings.fromDate.toDateString() %></strong></span><span><strong><%= bookings.toDate.toDateString() %></strong></span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Total Days</span><span><%= bookings.totalDays %></span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>Total Guests</span><span><%= bookings.totalGuests %></span>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between total font-weight-bold">
+              <span>Total Price</span><span><%= bookings.totalPrice %></span>
+            </div>
+        </div>
+    </div>
+
+    <a href="/listings/<%= bookings.hotel._id %>" class="my-4">See Hotel Details</a>
+  </section>
+</body>

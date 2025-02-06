@@ -1,10 +1,17 @@
 const Listing = require("./models/listing.js");
 const Review = require("./models/reviews.js");
-const { ListingSchema,reviewSchema } = require("./schema.js");
+const { ListingSchema, reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 
 module.exports.validateListing = (req, res, next) => {
-  let { error } = ListingSchema.validate(req.body);
+
+  let { error } = ListingSchema.validate({
+    title: req.body.title,
+    description: req.body.description,
+    price: req.body.price,
+    location: req.body.location,
+    capacity: req.body.capacity,
+  });
   if (error) {
     throw new ExpressError(400, error);
   } else {
@@ -13,13 +20,13 @@ module.exports.validateListing = (req, res, next) => {
 };
 
 module.exports.validateReview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-    if (error) {
-      throw new ExpressError(400, error);
-    } else {
-      next();
-    }
-  };
+  let { error } = reviewSchema.validate(req.body);
+  if (error) {
+    throw new ExpressError(400, error);
+  } else {
+    next();
+  }
+};
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {

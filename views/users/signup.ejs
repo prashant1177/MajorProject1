@@ -1,19 +1,60 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-3">
-    <h2 class="col-6 offset-2">SignUp</h2>
-    <div class="col-6 offset-2">
-        <form action="/signup" method="POST" class="needs-validation" novalidate>
-          <div class="mb-3"><label for="username" class="form-label">username</label>
-            <input required name="username" id="username" type="text" class="form-control"/>
-        </div>  
-        <div class="mb-3"><label for="email" class="form-label">email</label>
-            <input required name="email" id="email" type="text" class="form-control"/>
-        </div> 
-        <div class="mb-3"><label for="password" class="form-label">password</label>
-            <input required name="password" id="password" type="password" class="form-control"/>
-        </div> 
-        <button class="btn btn-success">SignUp</button> 
-        </form>
-    </div>
+<div class="row mt-3 my-4">
+  <h2 class="col-6 offset-2 text-center ">SignUp</h2>
+  <div class="col-6 offset-2">
+    <form action="/signup" method="POST" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          required
+          name="username"
+          id="username"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="fullname" class="form-label">Full Name</label>
+        <input
+          required
+          name="fullname"
+          id="fullname"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          required
+          name="email"
+          id="email"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone</label>
+        <input
+          required
+          name="phone"
+          id="phone"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          required
+          name="password"
+          id="password"
+          type="password"
+          class="form-control"
+        />
+      </div>
+      <button class="btn btn-success">SignUp</button>
+    </form>
+  </div>
 </div>

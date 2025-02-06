@@ -1,27 +1,69 @@
 <% layout("./layouts/boilerplate") %>
 <body>
-    <h2 class="text-center mt-4 my-4">Edit Listing</h2>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="container mb-5 needs-validation" novalidate>
-        <label for="exampleFormControlInput1" class="form-label">Title</label>
-        <input required name="listing[title]" value="<%= listing.title %>" type="text" class="form-control"/>
-        <br>
+  <h2 class="text-center mt-4 my-4">Edit Listing</h2>
+  <form
+    enctype="multipart/form-data"
+    method="POST"
+    action="/listings/<%= listing._id %>?_method=PUT"
+    class="container mb-5 needs-validation"
+    novalidate
+  >
+    <label for="exampleFormControlInput1" class="form-label">Title</label>
+    <input
+      required
+      name="title"
+      value="<%= listing.title %>"
+      type="text"
+      class="form-control"
+    />
+    <br />
 
-        <br><label for="exampleFormControlInput1" class="form-label" >Description</label>
-        <textarea required name="listing[description]" class="form-control"><%= listing.description %></textarea>
-      
-        <br><label for="exampleFormControlInput1" class="form-label">Image</label>
-        <input required name="listing[image]" value="<%= listing.image %>"  type="text" class="form-control"/>
-        
-        <br><label for="exampleFormControlInput1" class="form-label">Price (per km)</label>
-        <input required name="listing[price]" value="<%= listing.price %>"  type="number" class="form-control"/>
-        
-        <br><label for="exampleFormControlInput1" class="form-label">Location</label>
-        <input required name="listing[location]" value="<%= listing.location %>"  type="text" class="form-control"/>
-        
-        <br><label for="exampleFormControlInput1" class="form-label">Capacity</label>
-        <input required name="listing[capacity]" value="<%= listing.capacity %>"  type="number" class="form-control"/>
-      
-        <button class="btn btn-dark my-4">Update</button>
-        <a href="/listings/<%= listing._id %>" class="btn btn-danger my-4">Cancel</a>
-    </form>
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Description</label
+    >
+    <textarea required name="description" class="form-control">
+<%= listing.description %></textarea
+    >
+
+    <br /><label for="exampleFormControlInput1" class="form-label">Image</label>
+    <input value="<%= listing.image %>" name="image" type="file" class="form-control" />
+
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Price (per day)</label
+    >
+    <input
+      required
+      name="price"
+      value="<%= listing.price %>"
+      type="number"
+      class="form-control"
+    />
+
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Location</label
+    >
+    <input
+      required
+      name="location"
+      value="<%= listing.location %>"
+      type="text"
+      class="form-control"
+    />
+
+    <br /><label for="exampleFormControlInput1" class="form-label"
+      >Capacity</label
+    >
+    <input
+      required
+      name="capacity"
+      value="<%= listing.capacity %>"
+      type="number"
+      class="form-control"
+    />
+
+    <button class="btn btn-dark my-4">Update</button>
+    <a href="/listings/<%= listing._id %>" class="btn btn-danger my-4"
+      >Cancel</a
+    >
+  </form>
 </body>

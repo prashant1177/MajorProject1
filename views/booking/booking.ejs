@@ -1,0 +1,37 @@
+<% layout("./layouts/boilerplate") %>
+<body>
+  <h1>Your Bookings</h1>
+
+  <div class="row w-100 my-4">
+    <div class="col-12 w-100">
+      <div class="card w-100">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col "><h5>Hotel</h5></th>
+                <th scope="col"><h5>Total Guests</h5></th>
+                <th scope="col"><h5>From</h5></th>
+                <th scope="col"><h5>TO</h5></th>
+                <th scope="col"><h5>Total Days</h5>
+                <th scope="col"><h5>Total Price</h5></th>
+              </tr>
+            </thead>
+            <tbody class="customtable">
+              <% bookings.forEach(booking => { %>
+              <tr class="py-4">
+                <td><a href="/listings/<%= booking.hotel._id %>"><%= booking.hotel.title %></a></td>
+                <td><%= booking.totalGuests %></td>
+                <td><%= booking.fromDate.toDateString() %></td>
+                <td><%= booking.toDate.toDateString() %></td>
+                <td><%= booking.totalDays %></td>
+                <td><%= booking.totalPrice %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
