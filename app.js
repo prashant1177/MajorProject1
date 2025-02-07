@@ -99,4 +99,3 @@ app.listen(8080, () => {
 
 // J1zkX9zZr9t6F2vM
 
-// mongodb+srv://prashu49pj:J1zkX9zZr9t6F2vM@hotelbookings.ijotz.mongodb.net/?retryWrites=true&w=majority&appName=HotelBookings
