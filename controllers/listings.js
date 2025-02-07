@@ -5,8 +5,12 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });const fs = require('fs');
 
 module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("./listings/index.ejs", { allListings });
+  const { location, price } = req.query;
+  let filter = location ? { location: { $regex: location, $options: "i" } } : {};
+  filter = price ? { ...filter, price: { $lte: price } } : filter;
+
+  const allListings = await Listing.find(filter);
+  res.render("./listings/index.ejs", { allListings,filter });
 };
 
 module.exports.userListing = async (req, res) => {

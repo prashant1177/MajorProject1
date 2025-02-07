@@ -17,8 +17,9 @@ const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
+const pagesRouter = require("./routes/pages.js");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/travel";
+const MONGO_URL = "mongodb+srv://prashu49pj:J1zkX9zZr9t6F2vM@hotelbookings.ijotz.mongodb.net/?retryWrites=true&w=majority&appName=HotelBookings";
 
 main()
   .then(() => {
@@ -71,19 +72,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/demouser", async(req, res)=>{
-//     let fakeUser = new User({
-//         email: "student@gmail.com",
-//         username: "delta-student1",
-//     }
-//     );
-//     let newUser = await User.register(fakeUser, "helloworld");
-//     res.send(newUser);
-// });
+
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/bookings", bookingRouter);
+app.use("/pages", pagesRouter);
 
 app.use("/", userRouter);
 
@@ -98,21 +92,10 @@ app.use((err, req, res, next) => {
   res.render("error.ejs", { err });
 });
 
-// app.get("/test", async (req, res)=>{
-//     let sampleListing = new Listing({
-//         title: "First",
-//         description: "A big traveller bus suitable for 12 people",
-//         image: "",
-//         price: "13",
-//         location: "Muktainagar",
-//         capacity: 12,
-//     });
-
-//     await sampleListing.save();
-//     console.log("sample was saved");
-//     res.send("success");
-// });
-
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
 });
+
+// J1zkX9zZr9t6F2vM
+
+// mongodb+srv://prashu49pj:J1zkX9zZr9t6F2vM@hotelbookings.ijotz.mongodb.net/?retryWrites=true&w=majority&appName=HotelBookings

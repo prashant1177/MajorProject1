@@ -10,7 +10,6 @@ module.exports.signupPost = async (req, res) => {
     let { username, fullname, email, phone, password } = req.body;
     const newUser = new User({ username, fullname, email, phone });
     const registerUser = await User.register(newUser, password);
-    console.log(registerUser);
     req.login(registerUser, (err) => {
       if (err) {
         return next(err);
@@ -50,7 +49,7 @@ module.exports.logout = async (req, res) => {
 };
 
 module.exports.homeGet = async (req, res) => {
+  const filter = null;
   const allListings = await Listing.find({});
-  console.log(allListings[0]);
-  res.render("./listings/index.ejs", { allListings });
+  res.render("./listings/index.ejs", { allListings, filter });
 };
