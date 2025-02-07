@@ -1,3 +1,5 @@
+require("dotenv").config(); // Load .env file variables
+
 const express = require("express");
 const app = express();
 
@@ -19,7 +21,7 @@ const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
 const pagesRouter = require("./routes/pages.js");
 
-const MONGO_URL = "mongodb+srv://prashu49pj:J1zkX9zZr9t6F2vM@hotelbookings.ijotz.mongodb.net/?retryWrites=true&w=majority&appName=HotelBookings";
+const MONGO_URL = process.env.MONGO_URL;
 
 main()
   .then(() => {
@@ -41,16 +43,17 @@ app.use(express.json()); // To parse JSON data
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
-app.use('/uploads', express.static(__dirname + '/uploads'));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 const sessionOption = {
-  secret: "secretcode",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    secure: false,
   },
 };
 
@@ -72,8 +75,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/bookings", bookingRouter);
@@ -83,7 +84,7 @@ app.use("/", userRouter);
 
 // Page not found
 app.all("*", (req, res, next) => {
-  next(new ExpressError(404, "Page not found"));
+  next(new ExpressError(404, "Page not found but this is working"));
 });
 
 //Error handling middleware
