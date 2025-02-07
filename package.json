@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "repository": {
     "type": "git",
@@ -20,6 +19,7 @@
   "homepage": "https://github.com/prashant1177/MajorProject1#readme",
   "dependencies": {
     "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",

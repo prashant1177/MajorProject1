@@ -21,8 +21,8 @@ const userRouter = require("./routes/user.js");
 const bookingRouter = require("./routes/booking.js");
 const pagesRouter = require("./routes/pages.js");
 
-const MONGO_URL = process.env.MONGO_URL;
 
+const MongoDBStore = require("connect-mongodb-session")(session);
 main()
   .then(() => {
     console.log("Connected to DB");
@@ -32,7 +32,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(process.env.MONGO_URL);
 }
 
 app.set("view engine", "ejs");
@@ -45,30 +45,56 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URL,
+  collection: "sessions",
+});
 const sessionOption = {
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || "secretcode",
+  store: store,
   resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    secure: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: false, // Set to false for local dev
+    httpOnly: true, 
+    maxAge: 3600000 
   },
 };
+
 
 app.use(session(sessionOption));
 app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy(User.authenticate())); // Ensure User.authenticate() is correctly called
 
 // use static serialize and deserialize of model for passport session support
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser((user, done) => {
+  done(null, user._id);  // Serialize user as the user._id
+});
+
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id); // Find user by the serialized id
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
 
 app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currentUser = req.user;
+  next();
+});
+
+
+app.use((req, res, next) => {
+  console.log("Current User:", req.user);
+  console.log("Session Data:", req.session);  // Log the session
+  console.log("Passport Data:", req.user);  // Debugging
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;

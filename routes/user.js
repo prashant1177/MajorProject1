@@ -19,7 +19,10 @@ router.post(
     failureRedirect: "/login",
     failureFlash: true,
   }),
-  userController.loginPost
+  (req, res) => {
+    console.log("Authenticated user:", req.user); // Log user after authentication
+    userController.loginPost(req, res);
+  }
 );
 
 router.get("/logout", userController.logout);
