@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
 
 const wrapAsync = require("../utils/WrapAsync.js");
-const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+const {
+  isLoggedIn,
+  isOwner,
+  validateListing,
+  upload,
+} = require("../middleware.js");
 
 const listingController = require("../controllers/listings.js");
 
@@ -31,7 +34,7 @@ router.put(
   "/:id",
   isLoggedIn,
   isOwner,
-  upload.single("image"),
+  upload,
   validateListing,
   wrapAsync(listingController.update)
 );
@@ -42,7 +45,7 @@ router.delete("/:id", isLoggedIn, isOwner, wrapAsync(listingController.delete));
 // Save Route && Create route
 router.post(
   "/",
-  upload.single("image"),
+  upload,
   validateListing,
   wrapAsync(listingController.saveListings)
 );

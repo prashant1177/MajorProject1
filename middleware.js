@@ -3,8 +3,13 @@ const Review = require("./models/reviews.js");
 const { ListingSchema, reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 
-module.exports.validateListing = (req, res, next) => {
+const multer = require("multer");
+const storage = multer.memoryStorage(); // Store files in memory
 
+module.exports.upload = multer({ storage: storage }).single("image");
+
+
+module.exports.validateListing = (req, res, next) => {
   let { error } = ListingSchema.validate({
     title: req.body.title,
     description: req.body.description,

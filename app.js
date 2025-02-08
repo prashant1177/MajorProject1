@@ -92,9 +92,6 @@ app.use((req, res, next) => {
 
 
 app.use((req, res, next) => {
-  console.log("Current User:", req.user);
-  console.log("Session Data:", req.session);  // Log the session
-  console.log("Passport Data:", req.user);  // Debugging
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currentUser = req.user;
@@ -125,3 +122,5 @@ app.listen(8080, () => {
 
 // J1zkX9zZr9t6F2vM
 
+// Notion Link
+// https://www.notion.so/Hotel-Bookings-37e4cb2e141b480fa4ce455a1c0d89be

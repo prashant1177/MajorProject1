@@ -29,7 +29,7 @@ module.exports.loginGet = (req, res) => {
 };
 
 module.exports.loginPost = async (req, res) => {
-  req.flash("success", "Welcome back");  console.log("User logged in:", req.user); // Debugging line
+  req.flash("success", "Welcome back");
 
   if (res.locals.redirectUrl) {
     res.redirect(res.locals.redirectUrl);
