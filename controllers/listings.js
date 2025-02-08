@@ -2,7 +2,6 @@ require("dotenv").config(); // Load .env file variables
 const Listing = require("../models/listing.js");
 const Booking = require("../models/booking");
 
-const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 
