@@ -1,7 +1,7 @@
 <% layout("./layouts/boilerplate") %>
 <body>
   <% if(filter) { %>
-  <form class="row w-100 my-4" method="GET" action="/listings">
+  <form class="row w-100 my-4 bg-secondary-subtle p-4 rounded-pill" method="GET" action="/listings">
     <div class="col w-100">
       <label for="exampleFormControlInput1" class="form-label">Location</label>
       <input
@@ -36,21 +36,21 @@
   <% } %>
   <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 w-100">
     <% if(allListings.length > 0){ for(let listings of allListings) { %>
-    <div class="card col mb-5">
+    <div class="card col mb-5 border-0 ">
       <a href="/listings/<%= listings._id %>" class="link-style">
         <img
           src="<%= listings.image %>"
-          class="card-img-top home-cards"
+          class="card-img-top home-cards rounded-4"
           alt="<%= listings.title %>"
         />
-        <div class="card-body">
-          <h5 class="card-title"><%= listings.title %></h5>
+        <div class="card-body p-0 mt-2">
+          <h5 class="card-title text-dark"><%= listings.title %></h5>
+          <div class="text-dark">
+          <h6 class="card-subtitle mb-2 text-body-secondary"><%= listings.location %></h6>
+            <h5 class="h5 mt-2">&#x20B9;<%= listings.price %> night</h5>
+            
+          </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">&#x20B9;<%= listings.price %>/Per Day</li>
-          <li class="list-group-item"><%= listings.capacity %> Peoples</li>
-          <li class="list-group-item"><%= listings.location %></li>
-        </ul>
       </a>
       
     </div>

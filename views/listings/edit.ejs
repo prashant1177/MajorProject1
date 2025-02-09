@@ -1,6 +1,7 @@
 <% layout("./layouts/boilerplate") %>
-<body>
-  <h2 class="text-center mt-4 my-4">Edit Listing</h2>
+<div class="d-flex justify-content-center">
+  <div class=" w-75">
+  <h2 class="text-center mt-4 my-4">EDIT LISTING</h2>
   <form
     enctype="multipart/form-data"
     method="POST"
@@ -61,9 +62,10 @@
       class="form-control"
     />
 
-    <button class="btn btn-dark my-4">Update</button>
-    <a href="/listings/<%= listing._id %>" class="btn btn-danger my-4"
+    <button class="btn btn-dark px-4 py-2 my-4">Submit</button>
+
+    <a href="/listings/<%= listing._id %>" class="btn btn-danger px-4 py-2 my-4"
       >Cancel</a
     >
-  </form>
-</body>
+  </div>
+</div>

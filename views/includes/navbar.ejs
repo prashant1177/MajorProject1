@@ -1,5 +1,5 @@
-<div class=" bg-body-tertiary">
-<nav class="navbar sticky-top navbar-expand-md bg-body-tertiary">
+<div class="">
+<nav class="navbar sticky-top navbar-expand-md">
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-house-heart-fill" viewBox="0 0 16 16">
         <path d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.707L8 2.207 1.354 8.853a.5.5 0 1 1-.708-.707z"/>
@@ -17,12 +17,12 @@
         <div class="navbar-nav ms-auto">
           <% if(!currentUser) {%>
           <a class="nav-link px-4" href="/signup">Sign Up</a>
-          <a class="nav-link px-4" href="/login">Login</a>
+          <a class="nav-link px-4 bg-dark rounded-1 text-light" href="/login" role="button">Login</a>
           <% }%> <% if(currentUser){%>
             <a class="nav-link px-4" href="/bookings/<%= currentUser._id %>/bookings">Your Booking</a>
             <a class="nav-link px-4" href="/listings/<%= currentUser._id %>/listings">Your Listings</a>
             <a class="nav-link px-4" href="/bookings/<%= currentUser._id %>/Booked">Book Listings</a>
-            <a class="nav-link px-4" href="/logout">Logout</a>
+            <a class="nav-link px-4 bg-dark rounded-1 text-light" href="/logout">Logout</a>
             <% }%> </div>
       </div>
     </div>
